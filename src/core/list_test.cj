@@ -7,26 +7,26 @@ import std.unittest.testmacro.{Test, TestCase, Expect, BeforeAll}
 class ListTest {
     @TestCase
     func emptyTest() {
-        let l = List<Int>.empty()
+        let l = List<Int64>.empty()
         @Expect(l, Nil)
     }
 
     @TestCase
     func consTest() {
-        let l = List<Int>.empty().cons(7)
+        let l = List<Int64>.empty().cons(7)
         @Expect(l, List.Cons(7, Nil))
     }
 
     @TestCase
     func makeByTest() {
-        let l = List<Int>.makeBy(3, {i => i})
+        let l = List.makeBy(3, {i => i})
         println(l)
         @Expect(l, Cons(0, Cons(1, Cons(2, Nil))))
     }
 
     @TestCase
     func fromArrayTest() {
-        let l = List<Int>.fromArray([1, 2, 3])
+        let l = List.fromArray([1, 2, 3])
         @Expect(l, Cons(1, Cons(2, Cons(3, Nil))))
     }
 
