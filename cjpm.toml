@@ -2,7 +2,7 @@
 
 [package]
   cjc-version = "0.57.3"
-  compile-option = "-O2 --disable-reflection"
+  compile-option = "-Oz --disable-reflection"
   description = "nothing here"
   link-option = ""
   name = "base"
