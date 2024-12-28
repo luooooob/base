@@ -1,0 +1,14 @@
+[dependencies]
+
+[package]
+  cjc-version = "0.57.3"
+  compile-option = "-O2 --disable-reflection"
+  description = "nothing here"
+  link-option = ""
+  name = "base"
+  output-type = "static"
+  override-compile-option = ""
+  src-dir = ""
+  target-dir = ""
+  version = "0.1.0"
+  [package.package-configuration]

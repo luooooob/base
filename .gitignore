@@ -1,0 +1,12 @@
+.vscode
+.idea
+
+.directory
+.Trash-*
+.DS_Store
+.Trashes
+
+.cache
+target
+*.macrocall
+tempFile*
