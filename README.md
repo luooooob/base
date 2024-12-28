@@ -34,7 +34,7 @@
 # ...
 
 [dependencies] 
-  coo = { git = "git@gitcode.com:yasuozz6/base.git"，branch = "main" }
+  base = { git = "https://github.com/luooooob/base.git", branch = "main" }
 
 # ...
 
@@ -52,6 +52,7 @@ import base.core.*
 }
 
 main() {
+    println(sum(0, 5))
     println(List
         .fromArray([4, 5, 1, 4, 6, 7, 9, 3])
         .foldl(0) { acc, x => acc + x }
