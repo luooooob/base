@@ -4,26 +4,26 @@
 
 ## 功能
 
-### [x] `base.tailrec.Tailrec`
+- [x] `base.tailrec.Tailrec`
 
 尾递归宏，将尾递归的函数优化成循环的形式
 
-### [x] `base.core.List`
+- [x] `base.core.List`
 
 函数式风格的单链表
 
-### [ ] `base.core.HashMap`
-### [ ] `base.core.HashSet`
-### [ ] `base.core.Str`
-### [x] `base.core.Option`
+- [ ] `base.core.HashMap`
+- [ ] `base.core.HashSet`
+- [ ] `base.core.Str`
+- [x] `base.core.Option`
 
 扩展标准库的 `Option`
 
-### [x] `base.core.Result`
+- [x] `base.core.Result`
 
 标准库中缺少的 `Result`
 
-### [ ] `base.clap.App`
+- [ ] `base.clap.App`
 
 构建命令行程序的工具
 
