@@ -19,14 +19,14 @@ class ResultTest {
 
   @TestCase
   func someOrNoneTest() {
-     @Expect(Result<Int64, String>.Ok(1).someOrNone(), Some(1))
-     @Expect(Result<Int64, String>.Err("e").someOrNone(), None)
+     @Expect(Result<Int64, String>.Ok(1).ok(), Some(1))
+     @Expect(Result<Int64, String>.Err("e").ok(), None)
   }
 
   @TestCase
   func someOrNoneErrTest() {
-     @Expect(Result<Int64, String>.Ok(1).someOrNoneErr(), None)
-     @Expect(Result<Int64, String>.Err("e").someOrNoneErr(), Some("e"))
+     @Expect(Result<Int64, String>.Ok(1).err(), None)
+     @Expect(Result<Int64, String>.Err("e").err(), Some("e"))
   }
 
   @TestCase

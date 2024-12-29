@@ -72,7 +72,7 @@ extend<A, E> Result<A, E> {
      * 将该 result 转换成 Option 类型
      * 如果该 result 为 Ok 返回 Some(a), 否则返回 None
      */
-    public func someOrNone(): Option<A> {
+    public func ok(): Option<A> {
         match (this) {
             case Ok(a) => Some(a)
             case _ => None
@@ -83,7 +83,7 @@ extend<A, E> Result<A, E> {
      * 将该 result 转换成 Option 类型, 但是反过来的
      * 如果该 result 为 Err 返回 Some(e), 否则返回 None
      */
-    public func someOrNoneErr(): Option<E> {
+    public func err(): Option<E> {
         match (this) {
             case Err(e) => Some(e)
             case _ => None
