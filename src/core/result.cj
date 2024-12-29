@@ -4,6 +4,7 @@ import base.tailrec.Tailrec
 import std.deriving.Derive
 
 @Derive[ToString where A <: ToString, E <: ToString]
+@Derive[Equatable where A <: Equatable<A>, E <: Equatable<E>]
 public enum Result<A, E> {
     | Ok(A)
     | Err(E)
@@ -110,15 +111,15 @@ extend<A, E> Result<A, E> {
     }
 }
 
-extend<A, E> Result<A, E> <: Equatable<Result<A, E>> where A <: Equatable<A>, E <: Equatable<E> {
-    /**
-     * 判断两个 Result 是否相等
-     */
-    public operator func == (rhs: Result<A, E>): Bool {
-        match ((this, rhs)) {
-            case (Ok(a), Ok(b)) => a == b
-            case (Err(a), Err(b)) => a == b
-            case _ => false
-        }
-    }
-}
+// extend<A, E> Result<A, E> <: Equatable<Result<A, E>> where A <: Equatable<A>, E <: Equatable<E> {
+//     /**
+//      * 判断两个 Result 是否相等
+//      */
+//     public operator func == (rhs: Result<A, E>): Bool {
+//         match ((this, rhs)) {
+//             case (Ok(a), Ok(b)) => a == b
+//             case (Err(a), Err(b)) => a == b
+//             case _ => false
+//         }
+//     }
+// }
