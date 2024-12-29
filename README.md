@@ -15,11 +15,11 @@
 ### [ ] `base.core.HashMap`
 ### [ ] `base.core.HashSet`
 ### [ ] `base.core.Str`
-### [ ] `base.core.OptionExt`
+### [x] `base.core.Option`
 
 扩展标准库的 `Option`
 
-### [ ] `base.core.Result`
+### [x] `base.core.Result`
 
 标准库中缺少的 `Result`
 
