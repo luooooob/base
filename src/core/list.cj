@@ -1,7 +1,9 @@
 package base.core
 
+import std.deriving.Derive
 import base.tailrec.Tailrec
 
+@Derive[ToString where A <: ToString]
 public enum List<A> {
     | Nil
     | Cons(A, List<A>)
@@ -387,26 +389,5 @@ extend<A> List<A> <: Equatable<List<A>> where A <: Equatable<A> {
             }
         }
         aux(this, rhs)
-    }
-}
-
-extend<A> List<A> where A <: ToString {
-    /**
-     * join 将 List 转换为字符串, 使用 sp 作为分隔符
-     */
-    public func join(sp: String): String {
-        match (this.rev()) {
-            case Nil => ""
-            case Cons(hd, tl) => tl.foldl(hd.toString()) {acc, x => "${x}${sp}${acc}"}
-        }
-    }
-}
-
-extend<A> List<A> <: ToString where A <: ToString {
-    /**
-     * toString 将 List 转换为字符串
-     */
-    public func toString() {
-        "List: [${this.join(",")}]"
     }
 }
