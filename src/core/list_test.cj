@@ -1,14 +1,14 @@
-protected package base.core
+package base.core
 
 import std.unittest.*
-import std.unittest.testmacro.{Test, TestCase, Expect, BeforeAll}
+import std.unittest.testmacro.{Test, TestCase, Expect}
 
 @Test
 class ListTest {
     @TestCase
     func emptyTest() {
         let l = List<Int64>.empty()
-        @Expect(l, Nil)
+        @Expect(l, List.Nil)
     }
 
     @TestCase
