@@ -11,14 +11,14 @@ public enum List<A> {
 
 extend<A> List<A> {
     /**
-     * empty 构造一个空的 List
+     * 构造一个空的 List
      */
     public static func empty(): List<A> {
         Nil
     }
 
     /** 
-     * makeBy 使用 f 生成一个长度为 len 的 List
+     * 使用 f 生成一个长度为 len 的 List
      * O(n), 尾递归
      */
     public static func makeBy(len: Int64, f: (Int64) -> A): List<A> {
@@ -33,7 +33,7 @@ extend<A> List<A> {
     }
 
     /**
-     * fromArray 从数组构造 List
+     * 从数组构造 List
      * O(n), 尾递归
      */
     public static func fromArray(arr: Array<A>): List<A> {
@@ -41,7 +41,8 @@ extend<A> List<A> {
     }
 
     /**
-     * cons 在 List 的头部增加一个元素
+     * 在 List 的头部增加一个元素
+     * 等于 Cons(this, x)
      * O(1)
      */
     public func cons(x: A): List<A> {
@@ -49,7 +50,7 @@ extend<A> List<A> {
     }
 
     /**
-     * find 返回满足 f 的第一个元素
+     * 返回满足 f 的第一个元素
      * O(n), 尾递归
      */
     public func find(f: (A) -> Bool): Option<A> {
@@ -65,7 +66,7 @@ extend<A> List<A> {
     }
 
     /**
-     * nth 返回下标为 i 的元素
+     * 返回下标为 i 的元素
      * 第一个元素下标为 0
      * O(n), 尾递归
      */
@@ -82,7 +83,7 @@ extend<A> List<A> {
     }
 
     /**
-     * head 返回第一个元素
+     * 返回第一个元素
      * O(1)
      */
     public func head(): Option<A> {
@@ -93,7 +94,7 @@ extend<A> List<A> {
     }
 
     /**
-     * tail 返回除第一个元素外的所有元素
+     * 返回除第一个元素外的所有元素
      * O(1)
      */
     public func tail(): Option<List<A>> {
@@ -104,7 +105,7 @@ extend<A> List<A> {
     }
 
     /**
-     * foldl 左折叠
+     * 左折叠
      * O(n), 尾递归
      */
     public func foldl<B>(acc: B, f: (B, A) -> B): B {
@@ -119,7 +120,7 @@ extend<A> List<A> {
     }
 
     /**
-     * foldr 右折叠
+     * 右折叠
      * O(n), *非尾递归*
      */
     public func foldr<B>(acc: B, f: (A, B) -> B): B {
@@ -134,7 +135,7 @@ extend<A> List<A> {
     }
 
     /** 
-     * rev 反转List
+     * 反转List
      * O(n), 尾递归
      */
     public func rev(): List<A> {
@@ -149,7 +150,7 @@ extend<A> List<A> {
     }
 
     /**
-     * revMap 从右向左执行的 map，结果是反转的
+     * 从右向左执行的 map，结果是反转的
      * O(n), 尾递归
      */
     public func revMap<B>(f: (A) -> B): List<B> {
@@ -164,7 +165,7 @@ extend<A> List<A> {
     }
 
     /**
-     * revMapi 从右向左执行的 mapi，结果是反转的
+     * 从右向左执行的 mapi，结果是反转的
      * O(n), 尾递归
      */
     public func revMapi<B>(f: (A, Int64) -> B): List<B> {
@@ -179,7 +180,7 @@ extend<A> List<A> {
     }
 
     /**
-     * revFilter 从右向左执行的 filter，结果是反转的
+     * 从右向左执行的 filter，结果是反转的
      * O(n), 尾递归
      */
     public func revFilter(f: (A) -> Bool): List<A> {
@@ -195,7 +196,7 @@ extend<A> List<A> {
     }
 
     /**
-     * revAppend 返回 this.rev() @ l
+     * 返回 this.rev() @ l
      * O(n), 尾递归
      */
     public func revAppend(l: List<A>): List<A> {
@@ -210,7 +211,7 @@ extend<A> List<A> {
     }
 
     /**
-     * map 从左向右执行的 map
+     * 从左向右执行的 map
      * O(n), *非尾递归*
      */
     public func map<B>(f: (A) -> B): List<B> {
@@ -224,7 +225,7 @@ extend<A> List<A> {
     }
 
     /**
-     * mapi 从左向右执行的 mapi
+     * 从左向右执行的 mapi
      * O(n), *非尾递归*
      */
     public func mapi<B>(f: (A, Int64) -> B): List<B> {
@@ -239,7 +240,7 @@ extend<A> List<A> {
     }
 
     /**
-     * filter 从左向右执行的 filter
+     * 从左向右执行的 filter
      * O(n), *非尾递归*
      */
     public func filter(f: (A) -> Bool): List<A> {
@@ -255,7 +256,7 @@ extend<A> List<A> {
     }
 
     /**
-     * append 返回 l1 @ l2
+     * 返回 l1 @ l2
      * O(n), *非尾递归*
      */
     public func append(l: List<A>): List<A> {
@@ -270,7 +271,7 @@ extend<A> List<A> {
     }
 
     /**
-     * partition 将 List 划分为两个 List，左边的 List 元素都满足 f，右边的 List 元素都不满足 f
+     * 将 List 划分为两个 List，左边的 List 元素都满足 f，右边的 List 元素都不满足 f
      * O(n), 尾递归
      */
     public func partition(f: (A) -> Bool): (List<A>, List<A>) {
@@ -286,7 +287,7 @@ extend<A> List<A> {
     }
 
     /**
-     * len 返回 List 的长度
+     * 返回 List 的长度
      * O(n), 尾递归
      */
     public func len(): Int64 {
@@ -301,7 +302,7 @@ extend<A> List<A> {
     }
 
     /**
-     * isEmpty 判断 List 是否为空
+     * 判断 List 是否为空
      * O(1)
      */
     public func isEmpty(): Bool {
@@ -312,7 +313,7 @@ extend<A> List<A> {
     }
 
     /**
-     * forAll 判断所有元素是否满足 f
+     * 判断所有元素是否满足 f
      * O(n), 尾递归
      */
     public func forAll(f: (A) -> Bool): Bool {
@@ -327,7 +328,7 @@ extend<A> List<A> {
     }
 
     /**
-     * exists 判断是否存在元素满足 f
+     * 判断是否存在元素满足 f
      * O(n), 尾递归
      */
     public func exists(f: (A) -> Bool): Bool {
@@ -342,7 +343,7 @@ extend<A> List<A> {
     }
 
     /**
-     * sort 对 List 进行归并排序
+     * 对 List 进行归并排序
      * O(nlogn), 非尾递归
      */
     public func sort(cmp: (A, A) -> Bool): List<A> {
@@ -378,7 +379,7 @@ extend<A> List<A> {
 
 extend<A> List<A> <: Equatable<List<A>> where A <: Equatable<A> {
     /**
-     * == 判断两个 List 是否每一个元素都相等
+     * 判断两个 List 是否每一个元素都相等
      */
     public operator func ==(rhs: List<A>): Bool {
         func aux(l1: List<A>, l2: List<A>): Bool {
