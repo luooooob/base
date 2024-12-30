@@ -11,6 +11,14 @@ public enum Result<A, E> {
 }
 
 extend<A, E> Result<A, E> {
+    public static func ofTry(f: () -> A): Result<A, Exception> {
+        try {
+            Ok(f())
+        } catch (e: Exception) {
+            Err(e)
+        }
+    }
+
     /**
      * 判断该 result 是否为 Ok
      */
