@@ -8,7 +8,7 @@
 
 尾递归宏，将尾递归的函数优化成循环的形式
 
-- [x] `base.core.List`
+- [x] `base.core.Lst`
 
 函数式风格的单链表
 
@@ -53,7 +53,7 @@ import base.core.*
 
 main() {
     println(sum(0, 5))
-    println(List
+    println(Lst
         .fromArray([4, 5, 1, 4, 6, 7, 9, 3])
         .foldl(0) { acc, x => acc + x }
     )
