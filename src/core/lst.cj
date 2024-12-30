@@ -377,7 +377,7 @@ extend<A> Lst<A> {
     }
 }
 
-// 需要手动实现 Equatable 因此为 Lst 自动派生的 Equatable 实现会有性能问题
+// 需要手动实现 Equatable 因为此 Lst 自动派生的 Equatable 实现会有性能问题
 extend<A> Lst<A> <: Equatable<Lst<A>> where A <: Equatable<A> {
     /**
      * 判断两个 Lst 是否每一个元素都相等
