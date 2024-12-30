@@ -4,26 +4,26 @@ import std.deriving.Derive
 import base.tailrec.Tailrec
 
 @Derive[ToString where A <: ToString]
-public enum List<A> {
+public enum Lst<A> {
     | Nil
-    | Cons(A, List<A>)
+    | Cons(A, Lst<A>)
 }
 
-extend<A> List<A> {
+extend<A> Lst<A> {
     /**
-     * 构造一个空的 List
+     * 构造一个空的 Lst
      */
-    public static func empty(): List<A> {
+    public static func empty(): Lst<A> {
         Nil
     }
 
     /** 
-     * 使用 f 生成一个长度为 len 的 List
+     * 使用 f 生成一个长度为 len 的 Lst
      * O(n), 尾递归
      */
-    public static func makeBy(len: Int64, f: (Int64) -> A): List<A> {
+    public static func makeBy(len: Int64, f: (Int64) -> A): Lst<A> {
         @Tailrec
-        func aux(i: Int64, acc: List<A>): List<A> {
+        func aux(i: Int64, acc: Lst<A>): Lst<A> {
             match (i) {
                 case 0 => Cons(f(i), acc)
                 case _ => aux(i - 1, Cons(f(i), acc))
@@ -33,19 +33,19 @@ extend<A> List<A> {
     }
 
     /**
-     * 从数组构造 List
+     * 从数组构造 Lst
      * O(n), 尾递归
      */
-    public static func fromArray(arr: Array<A>): List<A> {
-        List.makeBy(arr.size, {i => arr[i]})
+    public static func fromArray(arr: Array<A>): Lst<A> {
+        Lst.makeBy(arr.size, {i => arr[i]})
     }
 
     /**
-     * 在 List 的头部增加一个元素
+     * 在 Lst 的头部增加一个元素
      * 等于 Cons(this, x)
      * O(1)
      */
-    public func cons(x: A): List<A> {
+    public func cons(x: A): Lst<A> {
         Cons(x, this)
     }
 
@@ -55,7 +55,7 @@ extend<A> List<A> {
      */
     public func find(f: (A) -> Bool): Option<A> {
         @Tailrec
-        func aux(l: List<A>): Option<A> {
+        func aux(l: Lst<A>): Option<A> {
             match (l) {
                 case Nil => None
                 case Cons(hd, _) where f(hd) => Some(hd)
@@ -72,7 +72,7 @@ extend<A> List<A> {
      */
     public func nth(i: Int64): Option<A> {
         @Tailrec
-        func aux(l: List<A>, i: Int64): Option<A> {
+        func aux(l: Lst<A>, i: Int64): Option<A> {
             match (l) {
                 case Nil => None
                 case Cons(hd, _) where i == 0 => Some(hd)
@@ -97,7 +97,7 @@ extend<A> List<A> {
      * 返回除第一个元素外的所有元素
      * O(1)
      */
-    public func tail(): Option<List<A>> {
+    public func tail(): Option<Lst<A>> {
         match (this) {
             case Nil => None
             case Cons(hd, tl) => Some(tl)
@@ -110,7 +110,7 @@ extend<A> List<A> {
      */
     public func foldl<B>(acc: B, f: (B, A) -> B): B {
         @Tailrec
-        func aux(l: List<A>, acc: B): B {
+        func aux(l: Lst<A>, acc: B): B {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => aux(tl, f(acc, hd))
@@ -125,7 +125,7 @@ extend<A> List<A> {
      */
     public func foldr<B>(acc: B, f: (A, B) -> B): B {
         // not tailrec func
-        func aux(l: List<A>, acc: B): B {
+        func aux(l: Lst<A>, acc: B): B {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => f(hd, aux(tl, acc))
@@ -135,12 +135,12 @@ extend<A> List<A> {
     }
 
     /** 
-     * 反转List
+     * 反转Lst
      * O(n), 尾递归
      */
-    public func rev(): List<A> {
+    public func rev(): Lst<A> {
         @Tailrec
-        func aux(l: List<A>, acc: List<A>): List<A> {
+        func aux(l: Lst<A>, acc: Lst<A>): Lst<A> {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => aux(tl, Cons(hd, acc))
@@ -153,9 +153,9 @@ extend<A> List<A> {
      * 从右向左执行的 map，结果是反转的
      * O(n), 尾递归
      */
-    public func revMap<B>(f: (A) -> B): List<B> {
+    public func revMap<B>(f: (A) -> B): Lst<B> {
         @Tailrec
-        func aux(l: List<A>, acc: List<B>): List<B> {
+        func aux(l: Lst<A>, acc: Lst<B>): Lst<B> {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => aux(tl, Cons(f(hd), acc))
@@ -168,9 +168,9 @@ extend<A> List<A> {
      * 从右向左执行的 mapi，结果是反转的
      * O(n), 尾递归
      */
-    public func revMapi<B>(f: (A, Int64) -> B): List<B> {
+    public func revMapi<B>(f: (A, Int64) -> B): Lst<B> {
         @Tailrec
-        func aux(l: List<A>, i: Int64, acc: List<B>): List<B> {
+        func aux(l: Lst<A>, i: Int64, acc: Lst<B>): Lst<B> {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => aux(tl, i + 1, Cons(f(hd, i), acc))
@@ -183,9 +183,9 @@ extend<A> List<A> {
      * 从右向左执行的 filter，结果是反转的
      * O(n), 尾递归
      */
-    public func revFilter(f: (A) -> Bool): List<A> {
+    public func revFilter(f: (A) -> Bool): Lst<A> {
         @Tailrec
-        func aux(l: List<A>, acc: List<A>): List<A> {
+        func aux(l: Lst<A>, acc: Lst<A>): Lst<A> {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) where f(hd) => aux(tl, Cons(hd, acc))
@@ -199,9 +199,9 @@ extend<A> List<A> {
      * 返回 this.rev() @ l
      * O(n), 尾递归
      */
-    public func revAppend(l: List<A>): List<A> {
+    public func revAppend(l: Lst<A>): Lst<A> {
         @Tailrec
-        func aux(l: List<A>, acc: List<A>): List<A> {
+        func aux(l: Lst<A>, acc: Lst<A>): Lst<A> {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => aux(tl, Cons(hd, acc))
@@ -214,8 +214,8 @@ extend<A> List<A> {
      * 从左向右执行的 map
      * O(n), *非尾递归*
      */
-    public func map<B>(f: (A) -> B): List<B> {
-        func aux(l: List<A>): List<B> {
+    public func map<B>(f: (A) -> B): Lst<B> {
+        func aux(l: Lst<A>): Lst<B> {
             match (l) {
                 case Nil => Nil
                 case Cons(hd, tl) => Cons(f(hd), aux(tl))
@@ -228,9 +228,9 @@ extend<A> List<A> {
      * 从左向右执行的 mapi
      * O(n), *非尾递归*
      */
-    public func mapi<B>(f: (A, Int64) -> B): List<B> {
+    public func mapi<B>(f: (A, Int64) -> B): Lst<B> {
         // 非尾递归
-        func aux(l: List<A>, i: Int64): List<B> {
+        func aux(l: Lst<A>, i: Int64): Lst<B> {
             match (l) {
                 case Nil => Nil
                 case Cons(hd, tl) => Cons(f(hd, i), aux(tl, i + 1))
@@ -243,9 +243,9 @@ extend<A> List<A> {
      * 从左向右执行的 filter
      * O(n), *非尾递归*
      */
-    public func filter(f: (A) -> Bool): List<A> {
+    public func filter(f: (A) -> Bool): Lst<A> {
         // 非尾递归
-        func aux(l: List<A>): List<A> {
+        func aux(l: Lst<A>): Lst<A> {
             match (l) {
                 case Nil => Nil
                 case Cons(hd, tl) where f(hd) => Cons(hd, aux(tl))
@@ -259,9 +259,9 @@ extend<A> List<A> {
      * 返回 l1 @ l2
      * O(n), *非尾递归*
      */
-    public func append(l: List<A>): List<A> {
+    public func append(l: Lst<A>): Lst<A> {
         // 非尾递归
-        func aux(l1: List<A>, l2: List<A>): List<A> {
+        func aux(l1: Lst<A>, l2: Lst<A>): Lst<A> {
             match (l1) {
                 case Nil => l2
                 case Cons(hd, tl) => Cons(hd, aux(tl, l2))
@@ -271,12 +271,12 @@ extend<A> List<A> {
     }
 
     /**
-     * 将 List 划分为两个 List，左边的 List 元素都满足 f，右边的 List 元素都不满足 f
+     * 将 Lst 划分为两个 Lst，左边的 Lst 元素都满足 f，右边的 Lst 元素都不满足 f
      * O(n), 尾递归
      */
-    public func partition(f: (A) -> Bool): (List<A>, List<A>) {
+    public func partition(f: (A) -> Bool): (Lst<A>, Lst<A>) {
         @Tailrec
-        func aux(l: List<A>, yes: List<A>, no: List<A>): (List<A>, List<A>) {
+        func aux(l: Lst<A>, yes: Lst<A>, no: Lst<A>): (Lst<A>, Lst<A>) {
             match (l) {
                 case Nil => (yes.rev(), no.rev())
                 case Cons(hd, tl) where f(hd) => aux(tl, Cons(hd, yes), no)
@@ -287,12 +287,12 @@ extend<A> List<A> {
     }
 
     /**
-     * 返回 List 的长度
+     * 返回 Lst 的长度
      * O(n), 尾递归
      */
     public func len(): Int64 {
         @Tailrec
-        func aux(l: List<A>, acc: Int64): Int64 {
+        func aux(l: Lst<A>, acc: Int64): Int64 {
             match (l) {
                 case Nil => acc
                 case Cons(_, tl) => aux(tl, acc + 1)
@@ -302,7 +302,7 @@ extend<A> List<A> {
     }
 
     /**
-     * 判断 List 是否为空
+     * 判断 Lst 是否为空
      * O(1)
      */
     public func isEmpty(): Bool {
@@ -318,7 +318,7 @@ extend<A> List<A> {
      */
     public func forAll(f: (A) -> Bool): Bool {
         @Tailrec
-        func aux(l: List<A>, acc: Bool): Bool {
+        func aux(l: Lst<A>, acc: Bool): Bool {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => aux(tl, acc && f(hd))
@@ -333,7 +333,7 @@ extend<A> List<A> {
      */
     public func exists(f: (A) -> Bool): Bool {
         @Tailrec
-        func aux(l: List<A>, acc: Bool): Bool {
+        func aux(l: Lst<A>, acc: Bool): Bool {
             match (l) {
                 case Nil => acc
                 case Cons(hd, tl) => aux(tl, acc || f(hd))
@@ -343,12 +343,12 @@ extend<A> List<A> {
     }
 
     /**
-     * 对 List 进行归并排序
+     * 对 Lst 进行归并排序
      * O(nlogn), 非尾递归
      */
-    public func sort(cmp: (A, A) -> Bool): List<A> {
+    public func sort(cmp: (A, A) -> Bool): Lst<A> {
         @Tailrec
-        func merge(l1: List<A>, l2: List<A>, acc: List<A>): List<A> {
+        func merge(l1: Lst<A>, l2: Lst<A>, acc: Lst<A>): Lst<A> {
             match ((l1, l2)) {
                 case (Nil, Nil) => acc.rev()
                 case (Nil, Cons(hd2, tl2)) => merge(Nil, tl2, Cons(hd2, acc))
@@ -358,14 +358,14 @@ extend<A> List<A> {
             }
         }
         @Tailrec
-        func revSplit(l: List<A>, l1: List<A>, l2: List<A>): (List<A>, List<A>) {
+        func revSplit(l: Lst<A>, l1: Lst<A>, l2: Lst<A>): (Lst<A>, Lst<A>) {
             match (l) {
                 case Nil => (l1, l2)
                 case Cons(hd, Nil) => (l1.cons(hd), l2)
                 case Cons(hd, Cons(hd1, tl)) => revSplit(tl, Cons(hd, l1), Cons(hd1, l2))
             }
         }
-        func aux(l: List<A>): List<A> {
+        func aux(l: Lst<A>): Lst<A> {
             match (l) {
                 case Nil | Cons(_, Nil) => l
                 case Cons(_, _) =>
@@ -377,13 +377,13 @@ extend<A> List<A> {
     }
 }
 
-// 需要手动实现 Equatable 因此为 List 自动派生的 Equatable 实现会有性能问题
-extend<A> List<A> <: Equatable<List<A>> where A <: Equatable<A> {
+// 需要手动实现 Equatable 因此为 Lst 自动派生的 Equatable 实现会有性能问题
+extend<A> Lst<A> <: Equatable<Lst<A>> where A <: Equatable<A> {
     /**
-     * 判断两个 List 是否每一个元素都相等
+     * 判断两个 Lst 是否每一个元素都相等
      */
-    public operator func ==(rhs: List<A>): Bool {
-        func aux(l1: List<A>, l2: List<A>): Bool {
+    public operator func ==(rhs: Lst<A>): Bool {
+        func aux(l1: Lst<A>, l2: Lst<A>): Bool {
             match ((l1, l2)) {
                 case (Nil, Nil) => true
                 case (Cons(hd1, tl1), Cons(hd2, tl2)) where hd1 == hd2 => aux(tl1, tl2)
