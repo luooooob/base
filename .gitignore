@@ -9,4 +9,5 @@
 .cache
 target
 *.macrocall
+*.cj.macrocall
 tempFile*
