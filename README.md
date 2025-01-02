@@ -12,8 +12,14 @@
 
 函数式风格的单链表
 
-- [ ] `base.core.HashMap`
-- [ ] `base.core.HashSet`
+- [x] `base.core.Map`
+
+avl树实现的 Map
+
+- [x] `base.core.Set`
+
+avl树实现的 Set
+
 - [ ] `base.core.Str`
 - [x] `base.core.Option`
 
