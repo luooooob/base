@@ -3,6 +3,7 @@ package base.core
 import std.deriving.Derive
 
 // todo: 探索尾递归的ToString和Equatable实现
+// todo: 跟踪编译器错误, 使一些aux函数能够展开为尾递归
 
 @Derive[ToString where K <: ToString, V <: ToString]
 public enum Map<K, V> where K <: Comparable<K> {
