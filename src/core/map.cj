@@ -5,7 +5,6 @@ import std.deriving.Derive
 // todo: 探索尾递归的ToString和Equatable实现
 
 @Derive[ToString where K <: ToString, V <: ToString]
-@Derive[Equatable where K <: Equatable<K>, V <: Equatable<V>]
 public enum Map<K, V> where K <: Comparable<K> {
     | Empty
     | Node(Map<K, V>, K, V, Map<K, V>, Int64)
@@ -43,20 +42,6 @@ extend<K, V> Map<K, V> {
         match (this) {
             case Empty => 0
             case Node(_, _, _, _, h) => h
-        }
-    }
-
-    func entry(): Option<(K, V)> {
-        match (this) {
-            case Empty => None
-            case Node(_, k, v, _, _) => Some((k, v))
-        }
-    }
-
-    func value(): Option<V> {
-        match (this) {
-            case Empty => None
-            case Node(_, _, v, _, _) => Some(v)
         }
     }
 
@@ -121,40 +106,6 @@ extend<K, V> Map<K, V> {
         }
     }
 
-    /**
-     * 判断 Map 中是否包含 key
-     */
-    public func exists(key: K): Bool {
-        func aux(m: Map<K, V>, key: K): Bool {
-            match (m) {
-                case Empty => false
-                case Node(l, k, v, r, _) => match (key.compare(k)) {
-                    case EQ => true
-                    case LT => aux(l, key)
-                    case GT => aux(r, key)
-                }
-            }
-        }
-        aux(this, key)
-    }
-
-    /**
-     * 查找元素
-     */
-    public func find(key: K): Option<V> {
-        func aux(m: Map<K, V>, key: K): Option<V> {
-            match (m) {
-                case Empty => None
-                case Node(l, k, v, r, _) => match (key.compare(k)) {
-                    case EQ => Some(v)
-                    case LT => aux(l, key)
-                    case GT => aux(r, key)
-                }
-            }
-        }
-        aux(this, key)
-    }
-
     func minBinding(): (K, V) {
         func aux(m: Map<K, V>): (K, V) {
             match (m) {
@@ -199,22 +150,36 @@ extend<K, V> Map<K, V> {
     }
 
     /**
-     * 映射, 返回新的 Map
+     * 查找元素
      */
-    public func map(f: (K, V) -> V): Map<K, V> {
-        match (this) {
-            case Empty => Empty
-            case Node(l, k, v, r, h) => Node(l.map(f), k, f(k, v), r.map(f), h)
+    public func find(key: K): Option<V> {
+        func aux(m: Map<K, V>, key: K): Option<V> {
+            match (m) {
+                case Empty => None
+                case Node(l, k, v, r, _) => match (key.compare(k)) {
+                    case EQ => Some(v)
+                    case LT => aux(l, key)
+                    case GT => aux(r, key)
+                }
+            }
         }
+        aux(this, key)
     }
 
     /**
-     * 折叠
+     * 判断 Map 中是否包含 key
      */
-    public func fold<B>(acc: B, f: (B, K, V) -> B): B {
-        match (this) {
-            case Empty => acc
-            case Node(l, k, v, r, _) => r.fold(f(l.fold(acc, f), k, v), f)
+    public func exists(key: K): Bool {
+        func aux(m: Map<K, V>, key: K): Bool {
+            match (m) {
+                case Empty => false
+                case Node(l, k, v, r, _) => match (key.compare(k)) {
+                    case EQ => true
+                    case LT => aux(l, key)
+                    case GT => aux(r, key)
+                }
+            }
         }
+        aux(this, key)
     }
 }
