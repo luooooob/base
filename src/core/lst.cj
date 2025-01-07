@@ -37,7 +37,16 @@ extend<A> Lst<A> {
      * O(n), 尾递归
      */
     public static func fromArray(arr: Array<A>): Lst<A> {
-        Lst.makeBy(arr.size, {i => arr[i]})
+        Lst.makeBy(arr.size) {i => arr[i]}
+    }
+
+    /**
+     * 从字符串构造 Lst<Rune>
+     * O(n), 尾递归
+     */
+    public static func fromString(str: String): Lst<Rune> {
+        let arr = str.toRuneArray()
+        Lst.makeBy(arr.size) {i => arr[i]}
     }
 
     /**
