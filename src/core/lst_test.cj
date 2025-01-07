@@ -31,6 +31,12 @@ class LstTest {
     }
 
     @TestCase
+    func fromStringTest() {
+        let l = Lst<Rune>.fromString("abc")
+        @Expect(l, Cons(r'a', Cons(r'b', Cons(r'c', Nil))))
+    }
+
+    @TestCase
     func foldlTest() {
         let l = Lst.fromArray([4, 5, 1, 4, 6, 7, 9, 3]).foldl(0) {acc, x => acc + x}
         @Expect(l, 39)
