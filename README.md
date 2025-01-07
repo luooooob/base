@@ -33,6 +33,10 @@ avl树实现的 Set
 
 构建命令行程序的工具
 
+- [x] `base.parsec.Parsec`
+
+Parser Combinator 库
+
 ## 用法
 ```toml
 # cjpm.toml
@@ -72,4 +76,27 @@ main() {
 ```sh
 cjpm build
 cjpm test
+```
+
+
+
+## "--help" 的问题
+
+```sh
+# [command] [subcommand]
+cjpm run
+
+# [command] [subcommand] [options]
+cjpm run --build=args xxx --run-args xxx
+
+# [command] [subcommand] [subcommand]
+# 他好像不是 run 的一个option，他其实是个 subcommand
+cjpm run --help
+
+# [command] [subcommand] [subcommand]
+# 所以应该是这样的……
+cjpm run help
+
+
+
 ```
